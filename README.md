@@ -1,4 +1,4 @@
-# minimalist_bank_app
+# Minimalist Bank App
 
 In progress...
 
