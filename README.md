@@ -26,7 +26,7 @@ $ git clone https://github.com/faerlinpulido/minimalist_bank_app.git
 $ cd minimalist_bank_app
 ```
 
-The deployment of the application has been dockerized for your convenience. Deploy the application on your local machine:
+The deployment of the application has been dockerized for your convenience. To deploy the application on your local machine:
 
 ```bash
 $ docker-compose up
@@ -38,11 +38,11 @@ To start a session, open up `localhost:3000` on a browser.
 
 ## **How To Use**
 
-To use the application, you must first create an account. Enter a **username** and **password** and click the **Sign Up** button. You can create multiple accounts and are uniquely identified by their usernames. Passwords must be 4 or more characters in length. Signing up an account also automatically logs you in.
+To use the application, you must first create an account. Enter a **username** and **password** then click the **Sign Up** button. You can create multiple accounts, which are uniquely identified by their usernames. Passwords must be four or more characters in length. Signing up an account also automatically logs you in.
 
 <img src="img/login.png" alt="drawing" width="400"/>
 
-Once logged in, you can increase your balance by making a deposit. Simply enter an amount under **Deposit** and press enter. You can also send money to other users. To see this in action, open another window and sign up for another account. From one of these accounts, fill in the **Transfer To** (i.e. username of receiver) and **Amount** fields then press enter.
+Once logged in, you can increase your balance by making deposits. Simply enter an amount under **Deposit** and press enter. You can also send money to other users. To see this in action, open another window and sign up for another account. From one of these accounts, fill in the **Transfer To** (i.e. username of receiver) and **Amount** fields then press enter.
 
 ![diagram](img/bank.jpg)
 
