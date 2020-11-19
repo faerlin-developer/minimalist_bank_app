@@ -12,7 +12,7 @@ These instructions will get you a copy of the project up and running on your **l
 
 ### **Prerequisites**
 
-Before proceeding, install the following in order:
+Before proceeding, install the following in the order shown:
 
 - Docker Engine (https://docs.docker.com/engine/install/)
 - Docker Compose (https://docs.docker.com/compose/install/)
