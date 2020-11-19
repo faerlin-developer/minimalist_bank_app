@@ -1,6 +1,6 @@
 # Minimalist Bank App
 
-The application is implemented using JavaScript with a **Node.js** runtime, **Express** web framework and **MongoDB** database modelled via **Mongoose**. Additionally, real-time communication was achieved using **Socket.io**. This is a personal project to hone my skills in back-end web development.
+The application is implemented using JavaScript with a **Node.js** runtime, **Express** web framework and **MongoDB** database modelled via **Mongoose**. Additionally, real-time communication was achieved using **Socket.io** and user authentication was implemented using **JSON Web Tokens** with `bcrypt`. This is a personal project to hone my skills in back-end web development.
 
 ![diagram](img/minimalist_bank_app.jpg)
 
