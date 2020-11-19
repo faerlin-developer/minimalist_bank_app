@@ -14,7 +14,7 @@ exports.join = socket => {
     const { isVerified, error } = await authController.verifyToken(data.token);
     if (isVerified) {
       socket.join(data.room);
-      console.log(`${socket.id} joined ${data.room}`);
+      console.log(`Socket ID ${socket.id} joined ${data.room} room`);
       console.log(socket.rooms);
     } else {
       const message = `Failed to join ${data.room} room`;
@@ -26,7 +26,7 @@ exports.join = socket => {
 exports.leave = socket => {
   socket.on('leave', function (room) {
     socket.leave(room);
-    console.log(`${socket.id} left ${room}`);
+    console.log(`Socket ID ${socket.id} left ${room} room`);
     console.log(socket.rooms);
   });
 };

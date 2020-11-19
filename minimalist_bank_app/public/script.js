@@ -170,6 +170,7 @@ class UIController {
 
   displayTransaction(transaction) {
     const amount = transaction.amount;
+
     this.balance += amount;
     this.sumIn += amount > 0 ? amount : 0;
     this.sumOut += amount < 0 ? -1 * amount : 0;
@@ -178,10 +179,22 @@ class UIController {
     let date = new Date(transaction.date);
     date = date.toString().split(/\s+/).slice(0, 4).join(' ');
 
+    let details;
+    if (transaction.transfer_username === 'none') {
+      details = 'Direct deposit';
+    } else if (transaction.type === 'DEPOSIT') {
+      details = `Received from ${transaction.transfer_username}`;
+    } else {
+      details = `Sent to ${transaction.transfer_username}`;
+    }
+
     const html = `
       <div class="movements__row">
-        <div class="movements__type movements__type--${type}">${type}</div>
+          <div class="movements__type movements__type--${type}">${type} </div>
+        <div>
         <div class="movements__date">${date}</div>
+          <div class="details">${details}</div>
+        </div>
         <div class="movements__value">${amount} CAD</div>
       </div>
       `;
@@ -208,7 +221,7 @@ class UIController {
     this.DOM.divInfoBox.innerHTML = message;
   }
 
-  resetFieldsAndInfoBox() {
+  resetFieldsForLogIn() {
     this.balance = 0;
     this.sumIn = 0;
     this.sumOut = 0;
@@ -216,8 +229,8 @@ class UIController {
     this.DOM.inputLoginPin.value = '';
     this.DOM.inputLoginUsername.value = '';
     this.DOM.inputLoanAmount.value = '';
-    this.DOM.inputTransferAmount.value = '';
     this.DOM.inputTransferTo.value = '';
+    this.DOM.inputTransferAmount.value = '';
   }
 }
 
@@ -258,7 +271,7 @@ uiCtrl.DOM.btnSignup.addEventListener('click', async function (event) {
   dataCtrl.currentUsername = object.data.username;
   dataCtrl.currentToken = object.token;
 
-  uiCtrl.resetFieldsAndInfoBox();
+  uiCtrl.resetFieldsForLogIn();
   uiCtrl.clearUsernamePasswordFields();
   uiCtrl.displayUI(dataCtrl.currentUsername, dataCtrl.currentToken, []);
 
@@ -283,7 +296,7 @@ uiCtrl.DOM.btnLogin.addEventListener('click', async function (event) {
 
   const object = await dataCtrl.sendRequest(dataCtrl.URL_LOGIN, 'POST', body);
   if (object.status === 'fail') {
-    uiCtrl.displayModalBox(`Log in failed`);
+    uiCtrl.displayModalBox(object.message);
     return;
   }
 
@@ -299,7 +312,7 @@ uiCtrl.DOM.btnLogin.addEventListener('click', async function (event) {
   }
 
   uiCtrl.clearUsernamePasswordFields();
-  uiCtrl.resetFieldsAndInfoBox();
+  uiCtrl.resetFieldsForLogIn();
   uiCtrl.displayUI(
     dataCtrl.currentUsername,
     dataCtrl.currentToken,
@@ -326,8 +339,6 @@ uiCtrl.DOM.btnLoan.addEventListener('click', async function (event) {
     uiCtrl.displayInfoBox('Failed to deposit');
     return;
   }
-
-  uiCtrl.resetFieldsAndInfoBox();
 });
 
 uiCtrl.DOM.btnTransfer.addEventListener('click', async function (event) {
@@ -338,7 +349,7 @@ uiCtrl.DOM.btnTransfer.addEventListener('click', async function (event) {
     transferAmount,
   } = uiCtrl.getTransferUsernameAndAmount();
   if (!transferUsername || !transferAmount) {
-    uiCtrl.displayModalBox('Transfer To or Amount cannot be empty');
+    uiCtrl.displayInfoBox('Transfer To or Amount cannot be empty');
     return;
   }
 
@@ -364,7 +375,6 @@ dataCtrl.socket.on(dataCtrl.MAKE_TRANSFER_EVENT, function (transaction) {
 
 dataCtrl.socket.on(dataCtrl.JOIN_FAIL_EVENT, function (message) {
   dataCtrl.joinFailed = true;
-  console.log(message);
   uiCtrl.displayModalBox('Log in failed. Failed to join socket.');
 });
 

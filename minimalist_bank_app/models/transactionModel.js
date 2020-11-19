@@ -20,7 +20,7 @@ const transactionSchema = new mongoose.Schema({
   },
   transfer_username: {
     type: String,
-    default: 'none',
+    default: '',
   },
 });
 

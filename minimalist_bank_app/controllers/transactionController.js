@@ -74,6 +74,11 @@ exports.makeTransferValidation = async (req, res, next) => {
     return sendError(res, 400, message);
   }
 
+  if (req.body.usernameFrom === '' || req.body.usernameTo === '') {
+    const message = 'Invalid request: username cannot be empty string';
+    return sendError(res, 400, message);
+  }
+
   const accountFrom = await User.find({ username: req.body.usernameFrom });
   const accountTo = await User.find({ username: req.body.usernameTo });
   if (accountFrom.length === 0 || accountTo.length === 0) {
