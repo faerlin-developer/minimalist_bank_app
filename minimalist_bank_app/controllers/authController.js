@@ -116,17 +116,21 @@ function getTokenFromRequest(req) {
 }
 
 async function verifyToken(token) {
-  let error;
+  let isVerified, error;
   try {
     // Verify token
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
     // Check if user still exists
     const freshUser = await User.findById(decoded.id);
-    error = {
-      errCode: 401,
-      errMessage: 'The user belonging to the token no longer exists',
-    };
+
     isVerified = true;
+    if (!freshUser) {
+      error = {
+        errCode: 401,
+        errMessage: 'The user belonging to the token no longer exists',
+      };
+      isVerified = false;
+    }
 
     // If application allows updating password, check that next.
     // Otherwise, skip to next step.

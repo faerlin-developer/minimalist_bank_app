@@ -2,8 +2,8 @@ const Transaction = require('../models/transactionModel');
 const User = require('../models/userModel');
 const { app, io, http } = require('../app');
 
-const CREATE_TRANSACTION_NAME = 'createTransaction';
-const MAKE_TRANSFER_NAME = 'makeTransfer';
+const CREATE_TRANSACTION_EVENT = 'createTransaction';
+const MAKE_TRANSFER_EVENT = 'makeTransfer';
 
 exports.getTransactions = async (req, res) => {
   try {
@@ -46,7 +46,7 @@ exports.createTransactionValidation = async (req, res, next) => {
 exports.createTransaction = async (req, res) => {
   try {
     const transaction = await Transaction.create(req.body);
-    io.sockets.in(req.body.username).emit(CREATE_TRANSACTION_NAME, transaction);
+    io.sockets.in(req.body.username).emit(CREATE_TRANSACTION_EVENT, transaction);
 
     res.status(200).json({
       status: 'success',
@@ -125,8 +125,8 @@ exports.makeTransfer = async (req, res) => {
   try {
     const negativeTransaction = await Transaction.create(negativeBody);
     const positiveTransaction = await Transaction.create(positiveBody);
-    io.sockets.in(usernameFrom).emit(MAKE_TRANSFER_NAME, negativeTransaction);
-    io.sockets.in(usernameTo).emit(MAKE_TRANSFER_NAME, positiveTransaction);
+    io.sockets.in(usernameFrom).emit(MAKE_TRANSFER_EVENT, negativeTransaction);
+    io.sockets.in(usernameTo).emit(MAKE_TRANSFER_EVENT, positiveTransaction);
   } catch (err) {
     return sendError(res, 400, err.toString());
   }
