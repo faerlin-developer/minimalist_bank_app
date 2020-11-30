@@ -3,12 +3,13 @@ const express = require('express');
 const router = express.Router();
 const transactionController = require('../controllers/transactionController');
 const authController = require('../controllers/authController');
+const { createTransactionValidation, makeTransferValidation } = require('../validators/transactionValidator');
 
 router
   .route('/')
   .post(
     authController.protect,
-    transactionController.createTransactionValidation,
+    createTransactionValidation,
     transactionController.createTransaction
   );
 
@@ -20,7 +21,7 @@ router
   .route('/transfer')
   .post(
     authController.protect,
-    transactionController.makeTransferValidation,
+    makeTransferValidation,
     transactionController.makeTransfer
   );
 

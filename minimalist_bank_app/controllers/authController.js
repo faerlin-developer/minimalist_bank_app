@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const { promisify } = require('util');
-const { send } = require('process');
 
 exports.signup = async (req, res, next) => {
   try {
@@ -26,30 +25,6 @@ exports.signup = async (req, res, next) => {
       message: err.toString(),
     });
   }
-};
-
-exports.signupValidation = async (req, res, next) => {
-  const schemaAttributes = Object.entries(User.schema.paths);
-  for (const [field, attributes] of schemaAttributes) {
-    if (attributes.isRequired && !(field in req.body)) {
-      const message = `Invalid request: ${field} is missing in body.`;
-      return sendError(res, 400, message);
-    }
-  }
-
-  next();
-};
-
-exports.loginValidation = async (req, res, next) => {
-  const schemaAttributes = Object.entries(User.schema.paths);
-  for (const [field, attributes] of schemaAttributes) {
-    if (attributes.isRequired && !(field in req.body)) {
-      const message = `Invalid request: ${field} is missing in body.`;
-      return sendError(res, 400, message);
-    }
-  }
-
-  next();
 };
 
 exports.login = async (req, res) => {
