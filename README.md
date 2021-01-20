@@ -56,4 +56,4 @@ Once logged in, you can increase your balance by making deposits. Simply enter a
 
 ## **References**
 
-The front-end HTML page and its CSS style sheet were adapted from the course material of Jonas Schmedtmann ([http://codingheroes.io/](codingheroes.io)).
+The front-end HTML page and its CSS style sheet were adapted from the course material of Jonas Schmedtmann ([codingheroes.io](http://codingheroes.io/)).
